@@ -5,7 +5,6 @@ import {
   openPopup,
   closePopup,
   closePopupOverlay,
-  removePopupEsc,
   allPopups,
 } from "./components/modal.js";
 
