@@ -2,11 +2,12 @@
 // функция открытия попапа
 export function openPopup(popup) {
   popup.classList.add("popup_is-opened");
+  document.addEventListener("keydown", removePopupEsc);
 }
 // функция закрытия попапа
 export function closePopup(popup) {
-  popup.classList.add("popup_is-animated");
   popup.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", removePopupEsc);
 }
 
 //Массив всех попапов
@@ -20,14 +21,12 @@ export function closePopupOverlay(evt) {
 }
 
 // Закрытие попапов клавишей ESC
-export function removePopupEsc(evt) {
+function removePopupEsc(evt) {
   if (evt.key === "Escape") {
     allPopups.forEach(function (item) {
       if (item.classList.contains("popup_is-opened")) {
-        item.classList.add("popup_is-animated");
-        item.classList.remove("popup_is-opened");
+        closePopup(item);
       }
     });
   }
-  evt.target.removeEventListener("keydown", removePopupEsc);
 }

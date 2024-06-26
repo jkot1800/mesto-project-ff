@@ -16,6 +16,10 @@ const cardList = document.querySelector(".places__list");
 initialCards.forEach(function (item) {
   cardList.append(createNewCard(item, deleteCard, imageModal, addLikeButton));
 });
+// Анимация всех попапов (навешивание класса .popup_is-animated на все попапы при открытии страницы)
+allPopups.forEach(function (item) {
+  item.classList.add("popup_is-animated");
+});
 
 // ПОПАП ОКНО ПРОФАЙЛА
 const profileButoon = document.querySelector(".profile__edit-button");
@@ -27,17 +31,22 @@ profileButoon.addEventListener("click", function () {
 });
 
 // ИЗМЕНЕНИЕ СТРАНИЦЫ ЧЕРЕЗ ПОПАП (ФОРМА РЕДАКТИРОВАНИЯ ДАННЫХ О ПОЛЬЗОВАТЕЛЕ)
-const formElement = document.forms["edit-profile"];
-const nameInput = formElement.elements.name;
-const jobInput = formElement.elements.description;
+const profileForm = document.forms["edit-profile"];
+const nameInput = profileForm.elements.name;
+const jobInput = profileForm.elements.description;
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
+nameInput.value = profileTitle.textContent;
+jobInput.value = profileDescription.textContent;
 
-function handleFormSubmit(evt) {
+function profileFormSubmit(evt) {
   evt.preventDefault();
-  document.querySelector(".profile__title").textContent = nameInput.value;
-  document.querySelector(".profile__description").textContent = jobInput.value;
+
+  profileTitle.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
   closePopup(profilePopup);
 }
-formElement.addEventListener("submit", handleFormSubmit);
+profileForm.addEventListener("submit", profileFormSubmit);
 //КОНЕЦ КОДА ПОПАПА ОКНА ПРОФАЙЛА
 
 //ПОПАП ДОБАВЛЕНИЯ ИЗОБРАЖЕНИЯ НА БОЛЬШОЙ ПЛЮС
@@ -51,7 +60,7 @@ addButton.addEventListener("click", function () {
 const newPlaceCardForm = document.forms["new-place"];
 const placeNameInput = newPlaceCardForm.elements["place-name"];
 const placeUrlInput = newPlaceCardForm.elements.link;
-function newCardItem(evt) {
+function createNewCardItem(evt) {
   evt.preventDefault();
   const cardObj = {};
   cardObj.name = placeNameInput.value;
@@ -62,15 +71,16 @@ function newCardItem(evt) {
   closePopup(addModal);
   newPlaceCardForm.reset();
 }
-newPlaceCardForm.addEventListener("submit", newCardItem);
+newPlaceCardForm.addEventListener("submit", createNewCardItem);
 //КОНЕЦ КОДА ПОПАПА ДОБАВЛЕНИЯ ИЗОБРАЖЕНИЯ НА БОЛЬШОЙ ПЛЮС
+
+// Dom елементы модального окна карточки изображения
+const imagePopup = document.querySelector(".popup_type_image");
+const popupImage = imagePopup.querySelector(".popup__image");
+const popupImageSubtitle = imagePopup.querySelector(".popup__caption");
 
 // функция открытия модального окна карточки изображения
 function imageModal(item) {
-  const imagePopup = document.querySelector(".popup_type_image");
-  const popupImage = imagePopup.querySelector(".popup__image");
-  const popupImageSubtitle = imagePopup.querySelector(".popup__caption");
-
   popupImage.src = item.link;
   popupImage.alt = item.name;
   popupImageSubtitle.textContent = item.name;
@@ -83,16 +93,11 @@ allPopups.forEach(function (item) {
   const popupCrost = item.querySelector(".popup__close");
   popupCrost.addEventListener("click", function () {
     if (item.classList.contains("popup_type_edit")) {
-      item.classList.add("popup_is-animated");
       closePopup(item);
-      formElement.reset();
+      profileForm.reset();
     } else {
-      item.classList.add("popup_is-animated");
       closePopup(item);
     }
   });
   item.addEventListener("click", closePopupOverlay);
 });
-
-//СЛУШАТЕЛЬ ЗАКРЫТИЯ ПОПАПОВ ФОРМ клавишей ESC
-document.addEventListener("keydown", removePopupEsc);
