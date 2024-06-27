@@ -1,7 +1,7 @@
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
 // @todo: Функция создания карточки
-export function createNewCard(item, deleteCard, imageModal, addLikeButton) {
+export function createNewCard(item, deleteCard, openImageModal, addLikeButton) {
   const cardListItem = cardTemplate
     .querySelector(".places__item")
     .cloneNode(true);
@@ -14,7 +14,7 @@ export function createNewCard(item, deleteCard, imageModal, addLikeButton) {
   cardListItem.querySelector(".card__title").textContent = item.name;
 
   cardImage.addEventListener("click", function () {
-    imageModal(item);
+    openImageModal(item);
   });
 
   likeButton.addEventListener("click", addLikeButton);

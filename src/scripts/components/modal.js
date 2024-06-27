@@ -22,7 +22,7 @@ export function closePopupOverlay(evt) {
 
 // Закрытие попапов клавишей ESC
 function removePopupEsc(evt) {
-   if (evt.key === "Escape") {
-      closePopup(document.querySelector('.popup_is-opened'));
-   };
+  if (evt.key === "Escape") {
+    closePopup(document.querySelector(".popup_is-opened"));
+  }
 }

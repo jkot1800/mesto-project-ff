@@ -13,7 +13,9 @@ const cardList = document.querySelector(".places__list");
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach(function (item) {
-  cardList.append(createNewCard(item, deleteCard, imageModal, addLikeButton));
+  cardList.append(
+    createNewCard(item, deleteCard, openImageModal, addLikeButton)
+  );
 });
 // Анимация всех попапов (навешивание класса .popup_is-animated на все попапы при открытии страницы)
 allPopups.forEach(function (item) {
@@ -38,14 +40,14 @@ const profileDescription = document.querySelector(".profile__description");
 nameInput.value = profileTitle.textContent;
 jobInput.value = profileDescription.textContent;
 
-function profileFormSubmit(evt) {
+function submitProfileForm(evt) {
   evt.preventDefault();
 
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closePopup(profilePopup);
 }
-profileForm.addEventListener("submit", profileFormSubmit);
+profileForm.addEventListener("submit", submitProfileForm);
 //КОНЕЦ КОДА ПОПАПА ОКНА ПРОФАЙЛА
 
 //ПОПАП ДОБАВЛЕНИЯ ИЗОБРАЖЕНИЯ НА БОЛЬШОЙ ПЛЮС
@@ -65,7 +67,7 @@ function createNewCardItem(evt) {
   cardObj.name = placeNameInput.value;
   cardObj.link = placeUrlInput.value;
   cardList.prepend(
-    createNewCard(cardObj, deleteCard, imageModal, addLikeButton)
+    createNewCard(cardObj, deleteCard, openImageModal, addLikeButton)
   );
   closePopup(addModal);
   newPlaceCardForm.reset();
@@ -79,7 +81,7 @@ const popupImage = imagePopup.querySelector(".popup__image");
 const popupImageSubtitle = imagePopup.querySelector(".popup__caption");
 
 // функция открытия модального окна карточки изображения
-function imageModal(item) {
+function openImageModal(item) {
   popupImage.src = item.link;
   popupImage.alt = item.name;
   popupImageSubtitle.textContent = item.name;
@@ -94,6 +96,8 @@ allPopups.forEach(function (item) {
     if (item.classList.contains("popup_type_edit")) {
       closePopup(item);
       profileForm.reset();
+      nameInput.value = profileTitle.textContent;
+      jobInput.value = profileDescription.textContent;
     } else {
       closePopup(item);
     }
