@@ -93,14 +93,7 @@ function openImageModal(item) {
 allPopups.forEach(function (item) {
   const popupCrost = item.querySelector(".popup__close");
   popupCrost.addEventListener("click", function () {
-    if (item.classList.contains("popup_type_edit")) {
-      closePopup(item);
-      profileForm.reset();
-      nameInput.value = profileTitle.textContent;
-      jobInput.value = profileDescription.textContent;
-    } else {
-      closePopup(item);
-    }
+    closePopup(item);
   });
   item.addEventListener("click", closePopupOverlay);
 });
