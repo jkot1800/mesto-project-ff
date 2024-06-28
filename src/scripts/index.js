@@ -28,6 +28,8 @@ const profilePopup = document.querySelector(".popup_type_edit");
 
 //функция открытия попапа на профайле
 profileButoon.addEventListener("click", function () {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
   openPopup(profilePopup);
 });
 
@@ -37,8 +39,6 @@ const nameInput = profileForm.elements.name;
 const jobInput = profileForm.elements.description;
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
-nameInput.value = profileTitle.textContent;
-jobInput.value = profileDescription.textContent;
 
 function submitProfileForm(evt) {
   evt.preventDefault();
