@@ -7,6 +7,7 @@ import {
   closePopupOverlay,
   allPopups,
 } from "./components/modal.js";
+import { enableValidation, validationConfig } from "./components/validation.js";
 
 // @todo: DOM узлы
 const cardList = document.querySelector(".places__list");
@@ -97,3 +98,6 @@ allPopups.forEach(function (item) {
   });
   item.addEventListener("click", closePopupOverlay);
 });
+
+// Запуск валидации форм
+

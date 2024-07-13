@@ -1,0 +1,28 @@
+.form__input_type_error {
+    border-bottom-color: #ff0000;
+}
+
+.popup__input:focus,
+.popup__input:focus-visible {
+    outline: none;
+}
+
+.form__input-error {
+    opacity: 0;
+    font-size: 14px;
+    color: #ff0000;
+}
+
+.form__input-error_active {
+    opacity: 1;
+}
+
+.form__submit_inactive,
+.form__submit_inactive:hover {
+    background-color: inherit;
+    color: inherit;
+    border: 1px solid inherit;
+    border-radius: 2px;
+    opacity: 0.2;
+    cursor: auto;
+}
