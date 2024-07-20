@@ -10,9 +10,6 @@ export function closePopup(popup) {
   document.removeEventListener("keydown", removePopupEsc);
 }
 
-//Массив всех попапов
-export const allPopups = document.querySelectorAll(".popup");
-
 //Закрытия попапа кликом на оверлей
 export function closePopupOverlay(evt) {
   if (evt.currentTarget === evt.target) {

@@ -4,13 +4,8 @@ import {
   openPopup,
   closePopup,
   closePopupOverlay,
-  allPopups,
 } from "./components/modal.js";
-import {
-  enableValidation,
-  validationConfig,
-  clearValidation,
-} from "./components/validation.js";
+import { enableValidation, clearValidation } from "./components/validation.js";
 import {
   getUser,
   getCards,
@@ -19,6 +14,19 @@ import {
   deleteCardFromServer,
   updateAvatar,
 } from "./components/api.js";
+
+//Массив всех попапов
+const allPopups = document.querySelectorAll(".popup");
+
+//Объект с классами форм валидации
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "form__submit_inactive",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active",
+};
 
 // @todo: DOM узлы
 const cardList = document.querySelector(".places__list");
@@ -50,16 +58,16 @@ const profileDescription = document.querySelector(".profile__description");
 
 function submitProfileForm(evt) {
   evt.preventDefault();
-  profileTitle.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
 
   const formButton = evt.submitter;
   const defaultTextButton = formButton.textContent;
 
   formButton.textContent = "Сохранение...";
   //Передача данных пользователя на сервер
-  sendUser(profileTitle.textContent, profileDescription.textContent)
+  sendUser(nameInput.value, jobInput.value)
     .then(() => {
+      profileTitle.textContent = nameInput.value;
+      profileDescription.textContent = jobInput.value;
       closePopup(profilePopup);
     })
     .catch((err) => {

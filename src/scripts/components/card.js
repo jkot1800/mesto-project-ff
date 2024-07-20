@@ -42,8 +42,13 @@ export function createNewCard(
   });
 
   deleteButton.addEventListener("click", function (evt) {
-    deleteCard(evt);
-    deleteCardFromServer(item["_id"]);
+    deleteCardFromServer(item["_id"])
+      .then(() => {
+        deleteCard(evt);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   return cardListItem;
@@ -57,14 +62,22 @@ export function deleteCard(evt) {
 //Функция лайка карточки
 export function addLikeButton(evt, item, likesCounter) {
   if (evt.target.classList.contains("card__like-button_is-active")) {
-    deleteLike(item._id).then((res) => {
-      evt.target.classList.remove("card__like-button_is-active");
-      likesCounter.textContent = res.likes.length;
-    });
+    deleteLike(item._id)
+      .then((res) => {
+        evt.target.classList.remove("card__like-button_is-active");
+        likesCounter.textContent = res.likes.length;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } else {
-    addLike(item._id).then((res) => {
-      evt.target.classList.add("card__like-button_is-active");
-      likesCounter.textContent = res.likes.length;
-    });
+    addLike(item._id)
+      .then((res) => {
+        evt.target.classList.add("card__like-button_is-active");
+        likesCounter.textContent = res.likes.length;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }

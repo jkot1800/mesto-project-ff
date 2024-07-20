@@ -1,15 +1,5 @@
 //КОД ВАЛИДАЦИИ
 
-//Объект с классами форм валидации
-export const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "form__submit_inactive",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
-};
-
 // 1 --- Установка слушателей на формы
 export function enableValidation(validationConfig) {
   const formList = Array.from(
@@ -21,27 +11,26 @@ export function enableValidation(validationConfig) {
 }
 
 // 2 --- Функция установки слушателей validationConfig.formSelector
-function setEventListeners(formElement, validationConfig) {
+export function setEventListeners(formElement, validationConfig) {
   const inputList = Array.from(
     formElement.querySelectorAll(validationConfig.inputSelector)
   );
   const buttonElement = formElement.querySelector(
     validationConfig.submitButtonSelector
   );
-  
+
   toggleButtonState(inputList, buttonElement, validationConfig);
-  
+
   inputList.forEach(function (inputElement) {
     inputElement.addEventListener("input", function () {
-      
       toggleButtonState(inputList, buttonElement, validationConfig);
-      isValid(formElement, inputElement);
+      isValid(formElement, inputElement, validationConfig);
     });
   });
 }
 
 // 3 --- Функция проверки на валидность
-function isValid(formElement, inputElement) {
+export function isValid(formElement, inputElement, validationConfig) {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
@@ -61,7 +50,7 @@ function isValid(formElement, inputElement) {
 }
 
 //функция переключения состояния кнопки при валидации
-function toggleButtonState(inputList, buttonElement, validationConfig) {
+export function toggleButtonState(inputList, buttonElement, validationConfig) {
   if (hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
     buttonElement.classList.add(validationConfig.inactiveButtonClass);
@@ -79,7 +68,7 @@ function hasInvalidInput(inputList) {
 }
 
 //Функция показа ошибки ввода
-function showInputError(
+export function showInputError(
   formElement,
   inputElement,
   errorMessage,
@@ -94,9 +83,10 @@ function showInputError(
 }
 
 //Функция скрытия ошибки ввода
-function hideInputEror(formElement, inputElement, validationConfig) {
+export function hideInputEror(formElement, inputElement, validationConfig) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
+  inputElement.setCustomValidity("");
   inputElement.classList.remove(validationConfig.inputErrorClass);
   errorElement.classList.remove(validationConfig.errorClass);
   errorElement.textContent = "";
